@@ -5,6 +5,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./Layout/RootLayout";
 import ErrorPage from "./Pages/ErrorPage";
 import { Dashboard } from "./Pages/Dashboard";
+import ProjectDetails from "./Pages/ProjectDetails";
+import SignIn from "./Components/Auth/SignIn";
+import SignUp from "./Components/Auth/SignUp";
 
 const routes = createBrowserRouter([
   {
@@ -13,6 +16,18 @@ const routes = createBrowserRouter([
     errorElement: <ErrorPage/>,
     children: [
       {index: true, element: <Dashboard/>},
+      {
+        path: 'project/:id',
+        element: <ProjectDetails/>
+      },
+      {
+        path: 'signin',
+        element: <SignIn/>
+      },
+      {
+        path: 'signup',
+        element: <SignUp/>
+      }
     ]
   }
 ])

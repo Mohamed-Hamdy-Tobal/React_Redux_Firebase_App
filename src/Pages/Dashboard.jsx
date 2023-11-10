@@ -9,7 +9,7 @@ export const Dashboard = () => {
             <Container>
                 <div className="row">
                     <div className="col-lg-6"><ProjectList/></div>
-                    <div className="col-lg-6"><Notifications/></div>
+                    <div className="col-lg-5 offset-1"><Notifications/></div>
                 </div>
             </Container>
         </div>

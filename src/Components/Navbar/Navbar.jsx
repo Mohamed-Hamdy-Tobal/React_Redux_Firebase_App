@@ -18,7 +18,7 @@ export const Header = () => {
     return (
         <Navbar expand="lg" className="bg-body-tertiary darken-3">
             <Container>
-                <Link to='/' className='navbar-brand'>TobalPlan</Link>
+                <Link to='/' className='navbar-logo'>TobalPlan</Link>
                 
                 <div id="basic-navbar-nav" className={`navbar-collapse ${isToggled?'collapse':''}`}>
                     <Nav className="ms-auto">

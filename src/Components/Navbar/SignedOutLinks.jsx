@@ -4,8 +4,8 @@ import { Nav } from 'react-bootstrap'
 const SignedOutLinks = () => {
     return (
         <>
-            <Nav.Link to='/'>Signup</Nav.Link>
-            <Nav.Link to='/'>Login</Nav.Link>
+            <Nav.Link to='/'>New Project</Nav.Link>
+            <Nav.Link to='/'>Logout</Nav.Link>
         </>
     )
 }

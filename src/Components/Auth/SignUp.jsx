@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
-const userInfo = {email:'', password: ''}
+const userInfo = {email:'', password: '', fname: '', lname: ''}
 
-const SignIn = () => {
+const SignUp = () => {
 
     const [user, setUser] = useState(userInfo)
 
@@ -23,7 +23,15 @@ const SignIn = () => {
         <div className="sign-page sec-padd">
             <div className='container'>
                 <form action="" className="white" onSubmit={handleSubmit}>
-                    <h5 className="grey-text text-darken-3 page-head">Sign In</h5>
+                    <h5 className="grey-text text-darken-3 page-head">Sign UP</h5>
+                    <div className="input-field">
+                        <label htmlFor="fname">First Name: </label>
+                        <input type="text" name="fname" id="fname" onChange={handleUser} value={user.fname}/>
+                    </div>
+                    <div className="input-field">
+                        <label htmlFor="lname">Last Name: </label>
+                        <input type="text" name="lname" id="lname" onChange={handleUser} value={user.lname}/>
+                    </div>
                     <div className="input-field">
                         <label htmlFor="email">Email: </label>
                         <input type="email" name="email" id="email" onChange={handleUser} value={user.email}/>
@@ -33,7 +41,7 @@ const SignIn = () => {
                         <input type="password" name="password" id="password" onChange={handleUser} value={user.password}/>
                     </div>
                     <div className="input-field">
-                        <button className='btn btn-primary'>Login</button>
+                        <button className='btn btn-primary'>Submit</button>
                     </div>
                 </form>
             </div>
@@ -41,4 +49,4 @@ const SignIn = () => {
     )
 }
 
-export default SignIn
+export default SignUp

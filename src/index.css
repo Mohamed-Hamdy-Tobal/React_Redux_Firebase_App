@@ -41,6 +41,26 @@ textarea:focus  {
   outline: none;
 }
 
+.sec-padd {
+  padding: 100px 0;
+}
+.page-head {
+  font-size: 35px;
+  font-weight: 700;
+  position: relative;
+  width: fit-content;
+  margin-bottom: 40px;
+}
+.page-head::after {
+  content: '';
+  position: absolute;
+  width: 70%;
+  height: 4px;
+  bottom: -10px;
+  left: 0;
+  background-color: var(--main-color);
+}
+
 
 /* -- Start Header --- */
 nav {
@@ -53,11 +73,14 @@ nav {
   position: relative;
   height: 72.75px !important;
 }
-nav .navbar-brand {
-  color: #fff;
+nav .navbar-logo{
+  color: #fff !important;
   font-size: 30px;
   font-weight: 600;
   letter-spacing: -1px;
+}
+.navbar-logo:focus, .navbar-logo:hover {
+  color: #fff!important
 }
 nav ul.right {
   display: flex;
@@ -122,6 +145,22 @@ nav .icon-toggler {
 }
 /* -- End Header --- */
 
+/* --- Start SignIn --- */
+.sign-page form .input-field {
+  margin-bottom: 40px;
+}
+.sign-page form .input-field button{
+  width: 100px;
+  height: 40px;
+  font-weight: 700;
+}
+.sign-page form .input-field button:hover,
+.sign-page form .input-field button:focus {
+  color: var(--bs-btn-hover-color);
+  background-color: var(--bs-btn-hover-bg);
+  border-color: var(--bs-btn-hover-border-color);
+}
+/* --- End SignIn --- */
 
 
 
