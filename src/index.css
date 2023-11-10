@@ -43,6 +43,22 @@ textarea:focus  {
 
 
 /* -- Start Header --- */
+nav {
+  color: #fff;
+  width: 100% !important;
+  height: auto !important;
+  background-color: #333;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  position: relative;
+  height: 72.75px !important;
+}
+nav .navbar-brand {
+  color: #fff;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
 nav ul.right {
   display: flex;
   align-items: center;
@@ -55,5 +71,78 @@ nav .p-logo {
   border: none;
   border-radius: 50%;
   font-weight: 500;
+  margin-left: 15px;
+  padding: 0;
+  color: #fff;
+}
+nav .nav-link {
+  color: #fff !important;
+  font-weight: 500;
+  font-size: 17px;
+  padding: 0 15px !important;
+  height: 72.75px;
+  line-height: 72.75px;
+}
+nav .nav-link:hover {
+  background: #555;
+}
+nav .navbar-toggler {
+  margin-left: auto;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border: none;
+  margin-right: 10px;
+  width: 43px;
+}
+nav .bag-toggle {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar-toggler {
+  border: none;
+  background-color: transparent !important;
+}
+nav .icon-toggler {
+  font-size: 25px;
+  color: #fff
+}
+.navbar-toggler:focus {
+  text-decoration: none;
+  outline: 0 !important;
+  box-shadow: 0 0 0 !important;
+}
+
+.toggle-switch {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
 }
 /* -- End Header --- */
+
+
+
+
+
+
+/* Media */
+
+@media (max-width: 991px) {
+  nav .navbar-collapse {
+    position: absolute;
+    top: 72px;
+    left: 0;
+    width: 100%;
+    background: rgb(0 0 0 / 65%);
+    padding: 0px;
+  }
+  nav .nav-link {
+    text-align: center;
+  }
+  nav .nav-link:hover {
+    background: #3f3f3f;
+    text-align: center;
+  }
+}

@@ -6,7 +6,6 @@ return (
     <>
         <Header/>
         <main className="App">
-            app
             <Outlet/>
         </main>
     </>
