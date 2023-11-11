@@ -8,6 +8,9 @@ import { Dashboard } from "./Pages/Dashboard";
 import ProjectDetails from "./Pages/ProjectDetails";
 import SignIn from "./Components/Auth/SignIn";
 import SignUp from "./Components/Auth/SignUp";
+import CreateProject from "./Pages/CreateProject";
+import { Provider } from "react-redux";
+import { store } from "./Store/Store";
 
 const routes = createBrowserRouter([
   {
@@ -27,6 +30,10 @@ const routes = createBrowserRouter([
       {
         path: 'signup',
         element: <SignUp/>
+      },
+      {
+        path: 'create-project',
+        element: <CreateProject/>
       }
     ]
   }
@@ -34,5 +41,7 @@ const routes = createBrowserRouter([
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <RouterProvider router={routes} />
+    <Provider store={store}>
+      <RouterProvider router={routes} />
+    </Provider>
 );

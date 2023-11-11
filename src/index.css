@@ -6,8 +6,7 @@
   margin : 0px;
 }
 :root {
-  --main-color : #2196F3;
-  --main-color-alt : #1787e0;
+  --main-color : #ec407a;
   --main-trans : 0.3s;
   --item-fill : #FAFAFA;
   --main-padding: 100px;
@@ -16,9 +15,16 @@
 }
 html {
   scroll-behavior: smooth;
+  min-height: 100%;
 }
 body {
-  font-family: Arial, Helvetica, sans-serif
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: url('../src/assets/mario-bg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: bottom;
+  background-color: #95e8f3 !important;
+  min-height: 100%;
 }
 ul {
   list-style: none;
@@ -60,8 +66,23 @@ textarea:focus  {
   left: 0;
   background-color: var(--main-color);
 }
+form {
+  padding: 30px;
+}
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=email]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]){
+  border-color: var(--main-color);
+  box-shadow: none;
+}
 
-
+input[type=text]:not(.browser-default):focus:not([readonly]) + label,
+textarea.materialize-textarea:focus:not([readonly]) + label,
+input[type=email]:not(.browser-default):focus:not([readonly]) + label,
+input[type=password]:not(.browser-default):focus:not([readonly]) + label{
+  color: var(--main-color) !important;
+}
 /* -- Start Header --- */
 nav {
   color: #fff;
@@ -106,7 +127,8 @@ nav .nav-link {
   height: 72.75px;
   line-height: 72.75px;
 }
-nav .nav-link:hover {
+nav .nav-link:hover,
+nav .navbar-nav .nav-link.active {
   background: #555;
 }
 nav .navbar-toggler {
@@ -153,6 +175,8 @@ nav .icon-toggler {
   width: 100px;
   height: 40px;
   font-weight: 700;
+  background-color: var(--main-color) !important;
+  border-color: var(--main-color) !important;
 }
 .sign-page form .input-field button:hover,
 .sign-page form .input-field button:focus {

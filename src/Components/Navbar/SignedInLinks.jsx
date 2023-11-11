@@ -1,11 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const SignedInLinks = () => {
     return (
         <>
-            <Link to='/signup' className='nav-link'>Sign UP</Link>
-            <Link to='/signin' className='nav-link'>Login</Link>
+            <NavLink to='/signup' className='nav-link'>Sign UP</NavLink>
+            <NavLink to='/signin' className='nav-link'>Login</NavLink>
         </>
     )
 }
