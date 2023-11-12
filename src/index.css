@@ -186,6 +186,37 @@ nav .icon-toggler {
 }
 /* --- End SignIn --- */
 
+/* -- Start List --- */
+.dashboard {
+  padding: 60px 0
+}
+.project-list .card {
+  border-color: transparent;
+}
+.project-list .pro-card .card-tit {
+  font-size: 35px;
+  font-weight: 400;
+}
+.project-list .pro-card .name {
+  font-size: 20px;
+  margin-top: 14px;
+}
+.project-list .pro-card .info {
+  display: block;
+  margin-top: 15px;
+  width: 120px;
+  position: relative;
+  margin-left: calc(100% - 120px);
+  background-color: var(--main-color) !important;
+  border-color: var(--main-color) !important;
+}
+.project-list .pro-card .info:hover,
+.project-list .pro-card .info:focus {
+  color: var(--bs-btn-hover-color);
+  background-color: var(--bs-btn-hover-bg);
+  border-color: var(--bs-btn-hover-border-color);
+}
+/* -- End List --- */
 
 
 

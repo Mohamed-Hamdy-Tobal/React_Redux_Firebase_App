@@ -1,16 +1,14 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { addProject } from '../Store/Reducers/projectReducer'
 
 const userInfo = {title:'', content: ''}
 
 const CreateProject = () => {
 
-    const globalAuth = useSelector(state => state.authRed)
-    const globalProject = useSelector(state => state.projectRed)
-    console.log(globalAuth)
-    console.log(globalProject)
 
     const [user, setUser] = useState(userInfo)
+    const dispatch = useDispatch()
 
     const handleUser = (e) => {
         setUser({
@@ -19,10 +17,11 @@ const CreateProject = () => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         console.log(user)
         setUser(userInfo)
+        await dispatch(addProject(user))
     }
 
     return (
