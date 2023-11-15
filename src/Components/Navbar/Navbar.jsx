@@ -6,8 +6,10 @@ import SignedOutLinks from './SignedOutLinks'
 import User from './User'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faTimes, faBars } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
 
 export const Header = () => {
+    const {currentUser} = useSelector(state => state.authRed)
 
     const [isToggled, setToggled] = useState(true);
     
@@ -22,8 +24,9 @@ export const Header = () => {
                 
                 <div id="basic-navbar-nav" className={`navbar-collapse ${isToggled?'collapse':''}`} style={{ zIndex: '1000'}}>
                     <Nav className="ms-auto">
-                        <SignedOutLinks/>
-                        <SignedInLinks/>
+                        {/* <SignedOutLinks/>
+                        <SignedInLinks/> */}
+                        { Object.values(currentUser).length > 1? <SignedOutLinks/>: <SignedInLinks/>}
                     </Nav>
                 </div>
                 <div className='bag-toggle'>
