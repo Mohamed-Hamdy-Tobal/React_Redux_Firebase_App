@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addProject } from '../Store/Reducers/projectReducer'
+import {useNavigate} from 'react-router-dom'
 
 const userInfo = {title:'', content: ''}
 
@@ -9,6 +10,7 @@ const CreateProject = () => {
 
     const [user, setUser] = useState(userInfo)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleUser = (e) => {
         setUser({
@@ -22,6 +24,7 @@ const CreateProject = () => {
         console.log(user)
         setUser(userInfo)
         await dispatch(addProject(user))
+        navigate('/')
     }
 
     return (

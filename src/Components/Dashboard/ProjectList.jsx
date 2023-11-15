@@ -10,6 +10,7 @@ export const ProjectList = ({projects}) => {
             title={item.title} 
             content={item.content} 
             createdAt={item.createdAt} 
+            proID={item.id}
             key={idx}/>
         )
     })

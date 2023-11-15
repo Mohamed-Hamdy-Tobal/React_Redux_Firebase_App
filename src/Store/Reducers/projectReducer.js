@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '../../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
     loading: false, 
     error: null,
-    projects: []
+    projects: [],
+    singlePro: {}
 }
 
 
@@ -58,6 +59,27 @@ export const addProject = createAsyncThunk(
     }
 )
 
+// To Get Single Item
+export const fetchItemDetails = createAsyncThunk(
+    'itemDetails/fetchItemDetails',
+    async (itemId, { rejectWithValue }) => {
+        try {
+            // Fetch item details from Firestore based on the itemId
+            const docRef = doc(db, 'projects', itemId);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const itemDetails = docSnap.data();
+                return itemDetails;
+            } else {
+                throw new Error('Item not found');
+            }
+        } catch (error) {
+            // Handle errors and provide an error message
+            return rejectWithValue(error.message);
+        }
+    }
+);
 
 
 export const projectReducer = createSlice({
@@ -99,7 +121,22 @@ export const projectReducer = createSlice({
                 state.loading = false
                 state.error = action.payload
                 console.log(action.payload)
-            });
+            })
+
+            // For Single Data
+            .addCase(fetchItemDetails.pending, (state) => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(fetchItemDetails.fulfilled, (state, action) => {
+                state.loading = false
+                state.singlePro = action.payload
+                console.log('fulfilled Single: ', action.payload)
+            })
+            .addCase(fetchItemDetails.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload
+            })
         },
 })
 

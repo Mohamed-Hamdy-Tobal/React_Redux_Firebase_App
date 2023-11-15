@@ -20,7 +20,7 @@ const routes = createBrowserRouter([
     children: [
       {index: true, element: <Dashboard/>},
       {
-        path: 'project/:id',
+        path: 'project/:proID',
         element: <ProjectDetails/>
       },
       {

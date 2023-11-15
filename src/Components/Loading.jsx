@@ -1,4 +1,5 @@
 import React from 'react'
+import { SpannerLoading } from './Loading/SpannerLoading'
 
 const Loading = ({children, loading, error, wordSend}) => {
     const eleType = children.type
@@ -25,8 +26,7 @@ const Loading = ({children, loading, error, wordSend}) => {
         return (
             <>
                 {
-                    loading ?
-                    (<h1 className='mt-3'>...loading</h1>): 
+                    loading ? <SpannerLoading/>: 
                     error ? (<h1 className='mt-3'>{error}</h1>):
                     (
                         children

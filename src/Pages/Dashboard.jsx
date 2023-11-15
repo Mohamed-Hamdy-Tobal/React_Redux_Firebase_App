@@ -22,12 +22,12 @@ export const Dashboard = () => {
 
 
     return (
-        <div className='dashboard'>
+        <div className='dashboard position-relative'>
             <Container>
                 <Loading loading={loading} error={error}>
-                    <div className="row">
+                    <div className="row justify-content-between">
                         <div className="col-lg-6"><ProjectList projects={projects}/></div>
-                        <div className="col-lg-5 offset-1"><Notifications/></div>
+                        <div className="col-lg-5"><Notifications/></div>
                     </div>
                 </Loading>
             </Container>

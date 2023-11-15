@@ -20,7 +20,7 @@ export const Header = () => {
             <Container>
                 <Link to='/' className='navbar-logo'>TobalPlan</Link>
                 
-                <div id="basic-navbar-nav" className={`navbar-collapse ${isToggled?'collapse':''}`}>
+                <div id="basic-navbar-nav" className={`navbar-collapse ${isToggled?'collapse':''}`} style={{ zIndex: '1000'}}>
                     <Nav className="ms-auto">
                         <SignedOutLinks/>
                         <SignedInLinks/>
