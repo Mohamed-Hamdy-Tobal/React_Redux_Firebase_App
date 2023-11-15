@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { signUp } from '../../Store/Reducers/authReducer'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Alert } from 'react-bootstrap'
 
 const userInfo = {email:'', password: '', fname: '', lname: ''}
 
@@ -8,6 +11,11 @@ const SignUp = () => {
 
     const [user, setUser] = useState(userInfo)
     const dispatch = useDispatch()
+    const {currentUser, error} = useSelector(state => state.authRed)
+    const navigate = useNavigate()
+
+
+    // const [myError, setError] = useState()
 
     const handleUser = (e) => {
         setUser({
@@ -16,15 +24,30 @@ const SignUp = () => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
         console.log(user)
+        console.log(error)
         dispatch(signUp(user))
+
+        try {
+            await dispatch(signUp(user))
+        } catch {
+            console.log('Failed To Create Account')
+        }
+
         setUser(userInfo)
     }
 
+    useEffect(() => {
+        if (Object.values(currentUser).length > 1 && !error) {
+            navigate('/')
+        }
+    }, [currentUser, navigate, error])
+
     return (
         <div className="sign-page sec-padd">
+            {error && <Alert variant='danger' style={{position: 'absolute',width: '80%',top: '72.75px',left: '50%',transform:' translateX(-50%)'}}>{error}</Alert>}
             <div className='container'>
                 <form action="" className="white" onSubmit={handleSubmit}>
                     <h5 className="grey-text text-darken-3 page-head">Sign UP</h5>
