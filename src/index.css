@@ -208,14 +208,28 @@ nav .icon-toggler {
   width: 120px;
   position: relative;
   margin-left: calc(100% - 120px);
-  background-color: var(--main-color) !important;
-  border-color: var(--main-color) !important;
+  background-color: #447288 !important;
+  border-color: #447288 !important;
 }
 .project-list .pro-card .info:hover,
 .project-list .pro-card .info:focus {
   color: var(--bs-btn-hover-color);
   background-color: var(--bs-btn-hover-bg);
   border-color: var(--bs-btn-hover-border-color);
+}
+.project-list .close-pro {
+  position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--main-color);
+    color: #fff;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 50%;
+    font-weight: 500;
+    font-size: 18px;
 }
 /* -- End List --- */
 

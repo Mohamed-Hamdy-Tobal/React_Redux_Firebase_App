@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '../../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -61,7 +61,7 @@ export const addProject = createAsyncThunk(
 
 // To Get Single Item
 export const fetchItemDetails = createAsyncThunk(
-    'itemDetails/fetchItemDetails',
+    'projects/fetchItemDetails',
     async (itemId, { rejectWithValue }) => {
         try {
             // Fetch item details from Firestore based on the itemId
@@ -81,6 +81,21 @@ export const fetchItemDetails = createAsyncThunk(
     }
 );
 
+// The Action To Delete Data
+export const deleteProject = createAsyncThunk(
+    "projects/deleteProject",
+    async (id, thunkAPI) => {
+        const {dispatch} = thunkAPI
+        const {rejectWithValue} = thunkAPI;
+        try {
+            await deleteDoc(doc(db, "projects", id));
+            dispatch(fetchData())
+            return id
+        } catch (error){
+            return rejectWithValue(error.message)
+        }   
+    }
+)
 
 export const projectReducer = createSlice({
     name: 'projects',
@@ -134,6 +149,21 @@ export const projectReducer = createSlice({
                 console.log('fulfilled Single: ', action.payload)
             })
             .addCase(fetchItemDetails.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload
+            })
+
+            // For Delete Project
+            .addCase(deleteProject.pending, (state) => {
+                state.loading = true
+                state.error = null
+            })
+            .addCase(deleteProject.fulfilled, (state, action) => {
+                state.loading = false
+                state.singlePro = action.payload
+                console.log('fulfilled Single: ', action.payload)
+            })
+            .addCase(deleteProject.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload
             })
