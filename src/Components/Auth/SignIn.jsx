@@ -1,14 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { signIN } from '../../Store/Reducers/authReducer'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
 
 const userInfo = {email:'', password: ''}
 
 const SignIn = () => {
 
+    const navigate = useNavigate()
+    const [user, setUser] = useState(userInfo)
+
+    const {currentUser} = useSelector(state => state.authRed)
+    console.log(currentUser)
+
+    
+
     const dispatch = useDispatch()
 
-    const [user, setUser] = useState(userInfo)
 
     const handleUser = (e) => {
         setUser({
@@ -21,8 +31,15 @@ const SignIn = () => {
         e.preventDefault()
         console.log(user)
         dispatch(signIN(user))
+        console.log(currentUser)
         setUser(userInfo)
     }
+
+    useEffect(() => {
+        if (Object.values(currentUser).length > 1) {
+            navigate('/')
+        }
+    }, [currentUser, navigate])
 
     return (
         <div className="sign-page sec-padd">

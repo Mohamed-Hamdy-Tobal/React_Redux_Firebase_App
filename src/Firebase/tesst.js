@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import auth from '../../Firebase/firebase';
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const initialState = {
     loading: false, 
     error: null,
     currentUser: {},
-    redirectPathAfterSignIn: null,
 }
 
 // The Action To Sign Up
@@ -15,8 +15,13 @@ export const signUp = createAsyncThunk(
     async (user, thunkAPI) => {
         const {rejectWithValue} = thunkAPI;
         const {email, password} = user
+        const navigate = useNavigate()
+        const location = useLocation()
+    
+        const redirectPath = location.state?.path || '/'
         try {
             createUserWithEmailAndPassword(auth,email, password)
+            navigate(redirectPath )
             return user
         } catch (error){
             return rejectWithValue(error.message)
@@ -30,9 +35,14 @@ export const signIN = createAsyncThunk(
     async (user, thunkAPI) => {
         const {rejectWithValue} = thunkAPI;
         const {email, password} = user
+        const navigate = useNavigate()
+        const location = useLocation()
+    
+        const redirectPath = location.state?.path || '/'
         try {
-            await signInWithEmailAndPassword(auth, email, password)
+            signInWithEmailAndPassword(auth, email, password)
             console.log(auth)
+            navigate(redirectPath )
             return user
         } catch (error){
             return rejectWithValue(error.message)
@@ -55,11 +65,7 @@ export const logOut = createAsyncThunk(
 export const authReducer = createSlice({
     name: 'auth',
     initialState,
-    reducers: {
-        navigateAfterSignIn: (state, action) => {
-            state.redirectPathAfterSignIn = action.payload;
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
 
@@ -112,6 +118,6 @@ export const authReducer = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { navigateAfterSignIn } = authReducer.actions
+export const { increment, decrement, incrementByAmount } = authReducer.actions
 
 export default authReducer.reducer

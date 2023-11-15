@@ -11,6 +11,7 @@ import SignUp from "./Components/Auth/SignUp";
 import CreateProject from "./Pages/CreateProject";
 import { Provider } from "react-redux";
 import { store } from "./Store/Store";
+import { RequireAuth } from "./Firebase/RequireAuth";
 
 const routes = createBrowserRouter([
   {
@@ -18,7 +19,7 @@ const routes = createBrowserRouter([
     element: <Layout/>,
     errorElement: <ErrorPage/>,
     children: [
-      {index: true, element: <Dashboard/>},
+      {index: true, element: <RequireAuth><Dashboard/></RequireAuth>},
       {
         path: 'project/:proID',
         element: <ProjectDetails/>
