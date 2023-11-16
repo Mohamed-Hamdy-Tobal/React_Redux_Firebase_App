@@ -12,10 +12,8 @@ const SignUp = () => {
     const [user, setUser] = useState(userInfo)
     const dispatch = useDispatch()
     const {currentUser, error} = useSelector(state => state.authRed)
+    const [firebaseError, setFirebaseError] = useState(null);
     const navigate = useNavigate()
-
-
-    // const [myError, setError] = useState()
 
     const handleUser = (e) => {
         setUser({
@@ -27,27 +25,31 @@ const SignUp = () => {
     const handleSubmit = async(e) => {
         e.preventDefault()
         console.log(user)
-        console.log(error)
-        dispatch(signUp(user))
 
         try {
             await dispatch(signUp(user))
-        } catch {
-            console.log('Failed To Create Account')
-        }
+            setUser(userInfo)
+        } catch (error){
+            setFirebaseError(error.message);
 
-        setUser(userInfo)
+            if (error.code === 'auth/email-already-in-use') {
+                setFirebaseError('The email address is already in use.');
+            } else {
+                setFirebaseError(error.message);
+            }
+        }
     }
 
     useEffect(() => {
-        if (Object.values(currentUser).length > 1 && !error) {
+        if (Object.values(currentUser).length > 1) {
             navigate('/')
         }
-    }, [currentUser, navigate, error])
+    }, [currentUser, navigate])
 
     return (
         <div className="sign-page sec-padd">
             {error && <Alert variant='danger' style={{position: 'absolute',width: '80%',top: '72.75px',left: '50%',transform:' translateX(-50%)'}}>{error}</Alert>}
+            {firebaseError && <Alert variant="danger" style={{ position: 'absolute', width: '80%', top: '72.75px', left: '50%', transform: ' translateX(-50%)' }}>{firebaseError}</Alert>}
             <div className='container'>
                 <form action="" className="white" onSubmit={handleSubmit}>
                     <h5 className="grey-text text-darken-3 page-head">Sign UP</h5>

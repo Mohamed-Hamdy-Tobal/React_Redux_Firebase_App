@@ -1,33 +1,41 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import auth from '../../Firebase/firebase';
-import { useLocation, useNavigate } from 'react-router-dom'
+import auth, { db } from '../../Firebase/firebase';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 const initialState = {
     loading: false, 
     error: null,
     currentUser: {},
+    redirectPathAfterSignIn: null,
 }
 
+// The Action To Sign Up
 // The Action To Sign Up
 export const signUp = createAsyncThunk(
     "auth/signUp",
     async (user, thunkAPI) => {
         const {rejectWithValue} = thunkAPI;
-        const {email, password} = user
-        const navigate = useNavigate()
-        const location = useLocation()
-    
-        const redirectPath = location.state?.path || '/'
+        const {email, password, fname, lname} = user;
+
         try {
-            createUserWithEmailAndPassword(auth,email, password)
-            navigate(redirectPath )
-            return user
+            // Create the user in Firebase Authentication
+            await createUserWithEmailAndPassword(auth, email, password);
+
+            await setDoc(doc(db, "users", user.uid), {
+                uid: user.uid,
+                email,
+                fname,
+                lname,
+            });
+
+            return user;
         } catch (error){
-            return rejectWithValue(error.message)
+            return rejectWithValue(error.message);
         }   
     }
-)
+);
+
 
 // The Action To Sign In
 export const signIN = createAsyncThunk(
@@ -35,15 +43,22 @@ export const signIN = createAsyncThunk(
     async (user, thunkAPI) => {
         const {rejectWithValue} = thunkAPI;
         const {email, password} = user
-        const navigate = useNavigate()
-        const location = useLocation()
-    
-        const redirectPath = location.state?.path || '/'
         try {
-            signInWithEmailAndPassword(auth, email, password)
-            console.log(auth)
-            navigate(redirectPath )
-            return user
+            await signInWithEmailAndPassword(auth, email, password)
+
+
+            // To Get fName And lName Of User
+            const docRef = doc(db, 'users', user.uid);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const userDetails = docSnap.data();
+                return {...user, ...userDetails};
+            } else {
+                throw new Error('Item not found');
+            }
+
+
         } catch (error){
             return rejectWithValue(error.message)
         }   
@@ -65,7 +80,11 @@ export const logOut = createAsyncThunk(
 export const authReducer = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        navigateAfterSignIn: (state, action) => {
+            state.redirectPathAfterSignIn = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
 
@@ -118,6 +137,6 @@ export const authReducer = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = authReducer.actions
+export const { navigateAfterSignIn } = authReducer.actions
 
 export default authReducer.reducer

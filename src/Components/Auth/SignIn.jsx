@@ -4,6 +4,7 @@ import { signIN } from '../../Store/Reducers/authReducer'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Alert } from 'react-bootstrap'
+// import Loading from '../../Components/Loading'
 
 
 const userInfo = {email:'', password: ''}
@@ -14,10 +15,7 @@ const SignIn = () => {
     const [user, setUser] = useState(userInfo)
 
     const {currentUser, error} = useSelector(state => state.authRed)
-    console.log(currentUser)
-
     const dispatch = useDispatch()
-
 
     const handleUser = (e) => {
         setUser({

@@ -16,7 +16,7 @@ export const signUp = createAsyncThunk(
         const {rejectWithValue} = thunkAPI;
         const {email, password} = user
         try {
-            createUserWithEmailAndPassword(auth,email, password)
+            await createUserWithEmailAndPassword(auth,email, password)
             return user
         } catch (error){
             return rejectWithValue(error.message)
