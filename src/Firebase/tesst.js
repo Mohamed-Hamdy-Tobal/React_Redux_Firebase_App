@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import auth, { db } from '../../Firebase/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const initialState = {
     loading: false, 
@@ -22,8 +24,10 @@ export const signUp = createAsyncThunk(
             // Create the user in Firebase Authentication
             await createUserWithEmailAndPassword(auth, email, password);
 
-            await setDoc(doc(db, "users", user.uid), {
-                uid: user.uid,
+            const uniqueId = uuidv4();
+
+            await setDoc(doc(db, "users", uniqueId), {
+                uid: uniqueId,
                 email,
                 fname,
                 lname,

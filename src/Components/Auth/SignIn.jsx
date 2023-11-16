@@ -17,6 +17,8 @@ const SignIn = () => {
     const {currentUser, error} = useSelector(state => state.authRed)
     const dispatch = useDispatch()
 
+    console.log(currentUser)
+
     const handleUser = (e) => {
         setUser({
             ...user,
