@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { fetchItemDetails } from '../Store/Reducers/projectReducer'
 import Loading from '../Components/Loading'
+import moment from 'moment/moment'
+
 
 const ProjectDetails = () => {
 
@@ -28,7 +30,7 @@ const ProjectDetails = () => {
                     </div>
                     <div className="card-action lighten-4 grey-text grey">
                         <p>That Posted By {singlePro.authorFirstName} {singlePro.authorLastName}</p>
-                        <p className="grey-text date">{singlePro.createdAt}</p>
+                        <p className="grey-text date">{moment(singlePro.createdAt.seconds * 1000 + Math.floor(singlePro.createdAt.nanoseconds / 1e6)).calendar()}</p>
                     </div>
                 </div>
             </Loading>

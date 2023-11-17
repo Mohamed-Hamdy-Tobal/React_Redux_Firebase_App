@@ -304,3 +304,9 @@ nav .icon-toggler {
     text-align: center;
   }
 }
+
+@media (max-width: 776px) {
+  .main-content {
+    flex-direction: column-reverse;
+  }
+}

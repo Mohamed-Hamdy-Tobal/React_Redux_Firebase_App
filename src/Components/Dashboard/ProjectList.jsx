@@ -1,9 +1,12 @@
 import React from 'react'
 import ProjectSummary from '../../Pages/ProjectSummary'
+// import moment from 'moment'
 
 export const ProjectList = ({projects, deleteHandler}) => {
     console.log("Projects", projects)
 
+    // console.log(moment(projects[2].createdAt.nanoseconds).calendar())
+    // console.log(moment(projects[2].createdAt.seconds.toDate()).calendar())
     const singlePro = projects.map((item, idx) => {
         return (
             <ProjectSummary 

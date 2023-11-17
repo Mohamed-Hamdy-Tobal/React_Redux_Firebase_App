@@ -19,7 +19,10 @@ export const Dashboard = () => {
 
     useEffect(() => {
         // 1) Fetches Data
-        dispatch(fetchData())
+        const data = async() => {
+            await dispatch(fetchData())
+        }
+        data()
     }, [dispatch])
 
 
@@ -27,7 +30,7 @@ export const Dashboard = () => {
         <div className='dashboard position-relative'>
             <Container>
                 <Loading loading={loading} error={error}>
-                    <div className="row justify-content-between">
+                    <div className="row justify-content-between main-content">
                         <div className="col-lg-6"><ProjectList projects={projects} deleteHandler={deleteHandler}/></div>
                         <div className="col-lg-5"><Notifications/></div>
                     </div>

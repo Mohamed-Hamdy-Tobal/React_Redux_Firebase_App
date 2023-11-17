@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { collection, deleteDoc, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, setDoc } from 'firebase/firestore';
 import { db } from '../../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -17,7 +17,8 @@ export const fetchData = createAsyncThunk(
     async (_, thunkAPI) => {
         const {rejectWithValue} = thunkAPI;
         try {
-            const querySnapshot = await getDocs(collection(db, "projects"));
+            const q = query(collection(db, 'projects'), orderBy('createdAt', 'desc'));
+            const querySnapshot = await getDocs(q);
             let data = []
             querySnapshot.forEach((doc) => {
                 data.push({...doc.data(), ...{id:doc.id}})
@@ -39,19 +40,19 @@ export const addProject = createAsyncThunk(
             const uniqueId = uuidv4();
             const createdAt = new Date();
 
-            const formattedDate = createdAt.toLocaleString('en-US', {
-                month: 'long',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: true,
-                year: 'numeric'
-            });
+            // const formattedDate = createdAt.toLocaleString('en-US', {
+            //     month: 'long',
+            //     day: 'numeric',
+            //     hour: 'numeric',
+            //     minute: 'numeric',
+            //     hour12: true,
+            //     year: 'numeric'
+            // });
 
             await setDoc(doc(db, "projects", uniqueId), {
                 ...itemStore,
                 id: uniqueId, 
-                createdAt: formattedDate,
+                createdAt: createdAt,
                 authorFirstName: getState().authRed.currentUser.fname,
                 authorLastName: getState().authRed.currentUser.lname
             });
