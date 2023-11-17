@@ -33,8 +33,9 @@ export const fetchData = createAsyncThunk(
 export const addProject = createAsyncThunk(
     "projects/addProject",
     async (itemStore, thunkAPI) => {
-        const {rejectWithValue} = thunkAPI;
+        const {rejectWithValue, getState} = thunkAPI;
         try {
+            console.log(getState())
             const uniqueId = uuidv4();
             const createdAt = new Date();
 
@@ -50,7 +51,9 @@ export const addProject = createAsyncThunk(
             await setDoc(doc(db, "projects", uniqueId), {
                 ...itemStore,
                 id: uniqueId, 
-                createdAt: formattedDate
+                createdAt: formattedDate,
+                authorFirstName: getState().authRed.currentUser.fname,
+                authorLastName: getState().authRed.currentUser.lname
             });
             return itemStore;
         } catch (error){

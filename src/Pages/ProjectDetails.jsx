@@ -27,7 +27,7 @@ const ProjectDetails = () => {
                         </p>
                     </div>
                     <div className="card-action lighten-4 grey-text grey">
-                        <p>That Posted By Mohamed Tobal</p>
+                        <p>That Posted By {singlePro.authorFirstName} {singlePro.authorLastName}</p>
                         <p className="grey-text date">{singlePro.createdAt}</p>
                     </div>
                 </div>

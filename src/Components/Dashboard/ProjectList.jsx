@@ -11,6 +11,8 @@ export const ProjectList = ({projects, deleteHandler}) => {
             title={item.title} 
             content={item.content} 
             createdAt={item.createdAt} 
+            authorFirstName={item.authorFirstName}
+            authorLastName={item.authorLastName}
             proID={item.id}
             key={idx}/>
         )
