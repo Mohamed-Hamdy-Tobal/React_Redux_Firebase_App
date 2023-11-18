@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addProject } from '../Store/Reducers/projectReducer'
 import {useNavigate} from 'react-router-dom'
+import { addNotification } from '../Store/Reducers/notificationReducer'
+import moment from 'moment'
 
 const userInfo = {title:'', content: ''}
 
 const CreateProject = () => {
 
+    const {currentUser, loading} = useSelector(state => state.authRed)
 
     const [user, setUser] = useState(userInfo)
     const dispatch = useDispatch()
@@ -21,8 +24,16 @@ const CreateProject = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(user)
-        setUser(userInfo)
+
+        // Notifications
+        dispatch(
+            addNotification({
+                userName: `${currentUser.fname} ${currentUser.lname}`,
+                message: `Added A New Project `,
+                date: `${moment(new Date()).fromNow()}`
+            })
+        );
+
         await dispatch(addProject(user))
         navigate('/')
     }
@@ -41,7 +52,7 @@ const CreateProject = () => {
                         <textarea name="content" id="content" onChange={handleUser} value={user.content} className='materialize-textarea'></textarea>
                     </div>
                     <div className="input-field">
-                        <button className='btn btn-primary'>Create</button>
+                        <button className='btn btn-primary' disabled={loading}>Create</button>
                     </div>
                 </form>
             </div>

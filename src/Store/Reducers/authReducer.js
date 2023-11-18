@@ -70,11 +70,8 @@ export const signIN = createAsyncThunk(
 
             const userDetails = docSnap.data();
 
-            console.log("uid", uid);
-            console.log("userDetails", userDetails);
 
             if (docSnap.exists()) {
-                console.log("userDetails", userDetails);
                 // You can return the user object with the UID here if needed
                 return { ...user, uid, ...userDetails };
             } else {
@@ -119,7 +116,6 @@ export const authReducer = createSlice({
         .addCase(signUp.fulfilled, (state, action) => {
             state.loading = false
             state.currentUser = action.payload
-            console.log('fulfilled SingUp: ', action.payload)
         })
         .addCase(signUp.rejected, (state, action) => {
             state.loading = false
@@ -134,7 +130,6 @@ export const authReducer = createSlice({
         .addCase(signIN.fulfilled, (state, action) => {
             state.loading = false
             state.currentUser = action.payload
-            console.log('fulfilled SingIN : ', action.payload)
         })
         .addCase(signIN.rejected, (state, action) => {
             state.loading = false
@@ -149,7 +144,6 @@ export const authReducer = createSlice({
         .addCase(logOut.fulfilled, (state) => {
             state.loading = false
             state.currentUser = {}
-            console.log('fulfilled logout: ', state.currentUser)
         })
         .addCase(logOut.rejected, (state, action) => {
             state.loading = false

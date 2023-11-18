@@ -5,10 +5,8 @@ import { useNavigate, useRouteError } from 'react-router-dom'
 const ErrorPage = () => {
 
     const navigate = useNavigate()
-
     const error = useRouteError()
-    console.log(error)
-
+    
     return (
         <Container>
             <Row>

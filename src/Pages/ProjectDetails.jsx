@@ -3,17 +3,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { fetchItemDetails } from '../Store/Reducers/projectReducer'
 import Loading from '../Components/Loading'
-import moment from 'moment/moment'
 
 
 const ProjectDetails = () => {
 
     const params = useParams()
-    console.log(params)
-    
     const dispatch = useDispatch()
     const {singlePro, loading, error} = useSelector(state => state.projectRed)
+    const singleDate = singlePro.createdAt
+    // console.log(Object.values(singlePro.createdAt))
     console.log(singlePro)
+
     useEffect(() => {
         dispatch(fetchItemDetails(params.proID))
     }, [dispatch,params.proID])
@@ -30,7 +30,7 @@ const ProjectDetails = () => {
                     </div>
                     <div className="card-action lighten-4 grey-text grey">
                         <p>That Posted By {singlePro.authorFirstName} {singlePro.authorLastName}</p>
-                        <p className="grey-text date">{moment(singlePro.createdAt.seconds * 1000 + Math.floor(singlePro.createdAt.nanoseconds / 1e6)).calendar()}</p>
+                        <p className="grey-text date">{singleDate ? singleDate : ""}</p>
                     </div>
                 </div>
             </Loading>

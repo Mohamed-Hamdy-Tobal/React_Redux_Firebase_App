@@ -145,6 +145,7 @@ nav .navbar-toggler {
 nav .bag-toggle {
   display: flex;
   gap: 15px;
+  align-items: center;
 }
 
 .navbar-toggler {
@@ -305,8 +306,49 @@ nav .icon-toggler {
   }
 }
 
-@media (max-width: 776px) {
+@media (max-width: 991px) {
+  .notifications {
+    position: absolute;
+    width: 450px;
+    right: 0;
+    top: 0;
+    transition: .3s;
+    transform: scaleX(0);
+    transform-origin: top right;
+    -webkit-transform: scaleX(0);
+    -moz-transform: scaleX(0);
+    -ms-transform: scaleX(0);
+    -o-transform: scaleX(0);
+}
+  .notifications .pro-card {
+    margin: 0;
+  }
   .main-content {
     flex-direction: column-reverse;
   }
+}
+
+.icon-note {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  cursor: pointer;
+  display: none;
+}
+@media (max-width: 991px) {
+  .icon-note {
+    display: block;
+  }
+}
+
+.noti-block {
+  transform: scaleX(1);
+  -webkit-transform: scaleX(1);
+  -moz-transform: scaleX(1);
+  -ms-transform: scaleX(1);
+  -o-transform: scaleX(1);
+}
+.noti-color {
+  color: #e9dadf
 }

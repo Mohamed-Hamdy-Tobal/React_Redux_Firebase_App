@@ -4,6 +4,8 @@ import { signUp } from '../../Store/Reducers/authReducer'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Alert } from 'react-bootstrap'
+import { addNotification } from '../../Store/Reducers/notificationReducer'
+import moment from 'moment'
 
 const userInfo = {email:'', password: '', fname: '', lname: ''}
 
@@ -11,7 +13,7 @@ const SignUp = () => {
 
     const [user, setUser] = useState(userInfo)
     const dispatch = useDispatch()
-    const {currentUser, error} = useSelector(state => state.authRed)
+    const {currentUser, error, loading} = useSelector(state => state.authRed)
     const [firebaseError, setFirebaseError] = useState(null);
     const navigate = useNavigate()
 
@@ -24,10 +26,18 @@ const SignUp = () => {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-        console.log(user)
-
         try {
             await dispatch(signUp(user))
+
+            // For Notification
+            dispatch(
+                addNotification({
+                    userName: `${user.fname} ${user.lname}`,
+                    message: `Joined the party `,
+                    date: `${moment(new Date()).fromNow()}`
+                })
+            );
+
             setUser(userInfo)
         } catch (error){
             setFirebaseError(error.message);
@@ -70,7 +80,7 @@ const SignUp = () => {
                         <input type="password" name="password" id="password" onChange={handleUser} value={user.password}/>
                     </div>
                     <div className="input-field">
-                        <button className='btn btn-primary'>Submit</button>
+                        <button className='btn btn-primary' disabled={loading}>Submit</button>
                     </div>
                 </form>
             </div>

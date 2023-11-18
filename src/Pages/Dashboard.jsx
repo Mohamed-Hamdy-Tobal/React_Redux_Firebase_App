@@ -10,11 +10,6 @@ export const Dashboard = () => {
 
     const dispatch = useDispatch()
     const {projects, loading, error} = useSelector(state => state.projectRed)
-    console.log(projects)
-
-    // const deleteHandler = (id) => {
-    //     dispatch(deleteProject(id))
-    // }
     const deleteHandler = useCallback((id) => dispatch(deleteProject(id)), [dispatch])
 
     useEffect(() => {

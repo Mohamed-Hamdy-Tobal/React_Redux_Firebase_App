@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, setDoc } from 'firebase/firestore';
 import { db } from '../../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
+import moment from 'moment';
 
 const initialState = {
     loading: false, 
@@ -36,18 +37,8 @@ export const addProject = createAsyncThunk(
     async (itemStore, thunkAPI) => {
         const {rejectWithValue, getState} = thunkAPI;
         try {
-            console.log(getState())
             const uniqueId = uuidv4();
-            const createdAt = new Date();
-
-            // const formattedDate = createdAt.toLocaleString('en-US', {
-            //     month: 'long',
-            //     day: 'numeric',
-            //     hour: 'numeric',
-            //     minute: 'numeric',
-            //     hour12: true,
-            //     year: 'numeric'
-            // });
+            const createdAt = moment(new Date()).calendar();
 
             await setDoc(doc(db, "projects", uniqueId), {
                 ...itemStore,
@@ -107,7 +98,6 @@ export const projectReducer = createSlice({
     reducers: {
         addData: (state, action) => {
         state.projects.push(action.payload)
-        console.log(action.payload)
         },
     },
     extraReducers: (builder) => {
@@ -119,7 +109,6 @@ export const projectReducer = createSlice({
             .addCase(fetchData.fulfilled, (state, action) => {
                 state.loading = false
                 state.projects = action.payload
-                console.log('fulfilled : ', action.payload)
             })
             .addCase(fetchData.rejected, (state, action) => {
                 state.loading = false
@@ -134,12 +123,10 @@ export const projectReducer = createSlice({
             .addCase(addProject.fulfilled, (state, action) => {
                 state.loading = false
                 state.projects.push(action.payload)
-                console.log('fulfilled Add: ', action.payload)
             })
             .addCase(addProject.rejected, (state, action) => {
                 state.loading = false
                 state.error = action.payload
-                console.log(action.payload)
             })
 
             // For Single Data
@@ -150,7 +137,6 @@ export const projectReducer = createSlice({
             .addCase(fetchItemDetails.fulfilled, (state, action) => {
                 state.loading = false
                 state.singlePro = action.payload
-                console.log('fulfilled Single: ', action.payload)
             })
             .addCase(fetchItemDetails.rejected, (state, action) => {
                 state.loading = false
@@ -165,7 +151,6 @@ export const projectReducer = createSlice({
             .addCase(deleteProject.fulfilled, (state, action) => {
                 state.loading = false
                 state.singlePro = action.payload
-                console.log('fulfilled Single: ', action.payload)
             })
             .addCase(deleteProject.rejected, (state, action) => {
                 state.loading = false

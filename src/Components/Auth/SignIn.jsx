@@ -14,10 +14,8 @@ const SignIn = () => {
     const navigate = useNavigate()
     const [user, setUser] = useState(userInfo)
 
-    const {currentUser, error} = useSelector(state => state.authRed)
+    const {currentUser, error, loading} = useSelector(state => state.authRed)
     const dispatch = useDispatch()
-
-    console.log(currentUser)
 
     const handleUser = (e) => {
         setUser({
@@ -28,9 +26,7 @@ const SignIn = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(user)
         dispatch(signIN(user))
-        console.log(currentUser)
         setUser(userInfo)
     }
 
@@ -55,7 +51,7 @@ const SignIn = () => {
                         <input type="password" name="password" id="password" onChange={handleUser} value={user.password}/>
                     </div>
                     <div className="input-field">
-                        <button className='btn btn-primary'>Login</button>
+                        <button className='btn btn-primary' disabled={loading}>Login</button>
                     </div>
                 </form>
             </div>

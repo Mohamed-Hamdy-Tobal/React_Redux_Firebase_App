@@ -6,16 +6,31 @@ import SignedOutLinks from './SignedOutLinks'
 import User from './User'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faTimes, faBars } from '@fortawesome/free-solid-svg-icons';
-import { useSelector } from 'react-redux';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { showNotification } from '../../Store/Reducers/notificationReducer';
 
 export const Header = () => {
     const {currentUser} = useSelector(state => state.authRed)
+    const {notiShow} = useSelector((state) => state.notificationsRed);
+
 
     const [isToggled, setToggled] = useState(true);
+
+    const dispatch = useDispatch()
     
     const handleToggle = () => {
         setToggled(!isToggled);
     }
+
+
+    // useEffect(() => {
+    //     if (!notiShow) {
+    //         // Add the event listener when the component mounts
+    //         window.addEventListener('click', () => {dispatch(showNotification())});
+    //     }
+
+    // }, [dispatch, notiShow]);
 
     return (
         <Navbar expand="lg" className="bg-body-tertiary darken-3">
@@ -30,6 +45,7 @@ export const Header = () => {
                     </Nav>
                 </div>
                 <div className='bag-toggle'>
+                    <span className="icon-note" onClick={() => {dispatch(showNotification())}}><FontAwesomeIcon icon={faBell} className={`${notiShow? 'noti-color': ''}`}/></span>
                     <User/>
                     <button onClick={handleToggle} aria-controls="basic-navbar-nav" type="button" aria-label="Toggle navigation" className={`navbar-toggler ${isToggled?'collapsed':''}`}>
                         {isToggled?<FontAwesomeIcon icon={faBars} className='icon-toggler'/>:  <FontAwesomeIcon icon={faTimes} className='icon-toggler'/>}
@@ -39,27 +55,6 @@ export const Header = () => {
         </Navbar>
     )
 }
-
-
-
-// import React from 'react'
-// import { Container } from 'react-bootstrap'
-// import { Link } from 'react-router-dom'
-// import SignedInLinks from './SignedInLinks'
-// import SignedOutLinks from './SignedOutLinks'
-
-// export const Header = () => {
-//     return (
-//         <nav className="nav-wrapper grey darken-3">
-//             <Container className='container-fluid'>
-//                 <Link to='/' className='navbar-brand' style={{ fontSize: '30px',fontWeight: '600',letterSpacing: '-1px'}}>TobalPlan</Link>
-//                 <SignedInLinks/>
-//                 <SignedOutLinks/>
-//             </Container>
-//         </nav>
-//     )
-// }
-
 
 
 
