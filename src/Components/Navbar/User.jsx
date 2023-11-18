@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux'
 const User = () => {
     const {currentUser} = useSelector(state => state.authRed)
     console.log(currentUser)
-    console.log(Object.values(currentUser).length)
     return (
         <>
             <Nav to='/' className='p-logo btn btn-floating pink lighten-1'>

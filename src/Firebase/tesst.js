@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import auth, { db } from '../../Firebase/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 
 
 const initialState = {
@@ -13,7 +13,6 @@ const initialState = {
 }
 
 // The Action To Sign Up
-// The Action To Sign Up
 export const signUp = createAsyncThunk(
     "auth/signUp",
     async (user, thunkAPI) => {
@@ -22,12 +21,12 @@ export const signUp = createAsyncThunk(
 
         try {
             // Create the user in Firebase Authentication
-            await createUserWithEmailAndPassword(auth, email, password);
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-            const uniqueId = uuidv4();
+            const uid = userCredential.user.uid;
 
-            await setDoc(doc(db, "users", uniqueId), {
-                uid: uniqueId,
+            await setDoc(doc(db, "users", uid), {
+                uid: uid,
                 email,
                 fname,
                 lname,
@@ -42,32 +41,49 @@ export const signUp = createAsyncThunk(
 
 
 // The Action To Sign In
+
 export const signIN = createAsyncThunk(
     "auth/signIN",
     async (user, thunkAPI) => {
-        const {rejectWithValue} = thunkAPI;
-        const {email, password} = user
+        const { rejectWithValue } = thunkAPI;
+
+        // Check if user is defined
+        if (!user || !user.email || !user.password) {
+            return rejectWithValue("Invalid user object");
+        }
+
+        const { email, password } = user;
+
         try {
-            await signInWithEmailAndPassword(auth, email, password)
+            // Sign in with email and password
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
+            // Get the user's UID from the authentication result
+            const uid = userCredential.user.uid;
 
-            // To Get fName And lName Of User
-            const docRef = doc(db, 'users', user.uid);
+            // To get fName and lName of User
+            const docRef = doc(db, 'users', uid);
             const docSnap = await getDoc(docRef);
 
+            const userDetails = docSnap.data();
+
+            console.log("uid", uid);
+            console.log("userDetails", userDetails);
+
             if (docSnap.exists()) {
-                const userDetails = docSnap.data();
-                return {...user, ...userDetails};
+                console.log("userDetails", userDetails);
+                // You can return the user object with the UID here if needed
+                return { ...user, uid, ...userDetails };
             } else {
                 throw new Error('Item not found');
             }
-
-
-        } catch (error){
-            return rejectWithValue(error.message)
-        }   
+        } catch (error) {
+            return rejectWithValue(error.message);
+        }
     }
-)
+);
+
+
 // The Action To LogOut
 export const logOut = createAsyncThunk(
     "auth/logOut",

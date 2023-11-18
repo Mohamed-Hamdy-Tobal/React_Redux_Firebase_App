@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { browserLocalPersistence, createUserWithEmailAndPassword, setPersistence, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import auth, { db } from '../../Firebase/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 // import { v4 as uuidv4 } from 'uuid';
@@ -12,7 +12,6 @@ const initialState = {
     redirectPathAfterSignIn: null,
 }
 
-// The Action To Sign Up
 // The Action To Sign Up
 export const signUp = createAsyncThunk(
     "auth/signUp",
@@ -58,6 +57,9 @@ export const signIN = createAsyncThunk(
         try {
             // Sign in with email and password
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+            // Set persistence to LOCAL (or SESSION if you want to persist only for the current session)
+            await setPersistence(auth, browserLocalPersistence);
 
             // Get the user's UID from the authentication result
             const uid = userCredential.user.uid;
