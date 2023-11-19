@@ -1,6 +1,6 @@
 import React from 'react'
 import ProjectSummary from '../../Pages/ProjectSummary'
-// import moment from 'moment'
+import page from '../../assets/draft.png'
 
 export const ProjectList = ({projects, deleteHandler}) => {
 
@@ -17,10 +17,15 @@ export const ProjectList = ({projects, deleteHandler}) => {
             key={idx}/>
         )
     })
-
+    console.log(singlePro)
+    console.log(projects)
     return (
         <div className='project-list'>
-            {singlePro}
+            {projects.length > 0 ? singlePro: 
+            <div className='empty-page'>
+                <img src={page} alt='img'/>
+                <h3>Not Items Yet.</h3>
+            </div>}
         </div>
     )
 }

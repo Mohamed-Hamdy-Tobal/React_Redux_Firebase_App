@@ -55,6 +55,3 @@ export const Header = () => {
         </Navbar>
     )
 }
-
-
-

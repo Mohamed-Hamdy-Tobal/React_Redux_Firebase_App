@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { removeNotification } from '../../Store/Reducers/notificationReducer';
+import bell from './../../assets/bell.png'
 
 export const Notifications = () => {
 
@@ -34,7 +35,13 @@ export const Notifications = () => {
                 <div className="card-content grey-text text-darken-3">
                     <span className="card-tit" style={{ fontSize: '32px',fontWeight: '700',marginBottom: '10px',display: 'block'}}>Notifications</span>
                     <ul className="notifications-list">
-                        {notificationsDom}
+                        {
+                        notificationsDom.length > 0? notificationsDom:
+                        <div className='empty-notes'>
+                            <h3>No Notices Right Now </h3>
+                            <img src={bell} alt='img'/>
+                        </div>
+                        }
                     </ul>
                 </div>
             </div>
