@@ -8,11 +8,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faTimes, faBars } from '@fortawesome/free-solid-svg-icons';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { showNotification } from '../../Store/Reducers/notificationReducer';
+import { counterDecrement, showNotification } from '../../Store/Reducers/notificationReducer';
 
 export const Header = () => {
     const {currentUser} = useSelector(state => state.authRed)
-    const {notiShow} = useSelector((state) => state.notificationsRed);
+    const {notiShow, counter} = useSelector((state) => state.notificationsRed);
 
 
     const [isToggled, setToggled] = useState(true);
@@ -45,7 +45,13 @@ export const Header = () => {
                     </Nav>
                 </div>
                 <div className='bag-toggle'>
-                    <span className="icon-note" onClick={() => {dispatch(showNotification())}}><FontAwesomeIcon icon={faBell} className={`${notiShow? 'noti-color': ''}`}/></span>
+                    <span className="icon-note position-relative" onClick={() => {
+                        dispatch(showNotification())
+                        dispatch(counterDecrement())
+                    }}>
+                        <FontAwesomeIcon icon={faBell} className={`${notiShow? 'noti-color': ''}`}/>
+                        {counter > 0? <span className='counter'>{counter}</span>: ''}
+                    </span>
                     <User/>
                     <button onClick={handleToggle} aria-controls="basic-navbar-nav" type="button" aria-label="Toggle navigation" className={`navbar-toggler ${isToggled?'collapsed':''}`}>
                         {isToggled?<FontAwesomeIcon icon={faBars} className='icon-toggler'/>:  <FontAwesomeIcon icon={faTimes} className='icon-toggler'/>}

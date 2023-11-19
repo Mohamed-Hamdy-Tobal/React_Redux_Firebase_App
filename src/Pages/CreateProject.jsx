@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addProject } from '../Store/Reducers/projectReducer'
 import {useNavigate} from 'react-router-dom'
-import { addNotification } from '../Store/Reducers/notificationReducer'
+import { addNotification, counterIncrement } from '../Store/Reducers/notificationReducer'
 import moment from 'moment'
 
 const userInfo = {title:'', content: ''}
@@ -33,6 +33,8 @@ const CreateProject = () => {
                 date: `${moment(new Date()).fromNow()}`
             })
         );
+        dispatch(counterIncrement())
+
 
         await dispatch(addProject(user))
         navigate('/')

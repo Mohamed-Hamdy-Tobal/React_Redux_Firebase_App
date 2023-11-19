@@ -4,7 +4,7 @@ import { signUp } from '../../Store/Reducers/authReducer'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Alert } from 'react-bootstrap'
-import { addNotification } from '../../Store/Reducers/notificationReducer'
+import { addNotification, counterIncrement } from '../../Store/Reducers/notificationReducer'
 import moment from 'moment'
 
 const userInfo = {email:'', password: '', fname: '', lname: ''}
@@ -37,6 +37,7 @@ const SignUp = () => {
                     date: `${moment(new Date()).fromNow()}`
                 })
             );
+            dispatch(counterIncrement())
 
             setUser(userInfo)
         } catch (error){

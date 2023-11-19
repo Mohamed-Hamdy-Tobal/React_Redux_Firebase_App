@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     notifications: [],
-    notiShow: false
+    notiShow: false,
+    counter: 0
 };
 
 const notificationsSlice = createSlice({
@@ -21,8 +22,14 @@ const notificationsSlice = createSlice({
             (notification) => notification.id !== action.payload
         );
         },
+        counterIncrement : (state) => {
+            state.counter += 1
+        },
+        counterDecrement : (state) => {
+            state.counter = 0
+        }
     },
 });
 
-export const { addNotification, removeNotification, showNotification } = notificationsSlice.actions;
+export const { addNotification, removeNotification, showNotification, counterIncrement, counterDecrement } = notificationsSlice.actions;
 export default notificationsSlice.reducer;

@@ -17,8 +17,7 @@ export const ProjectList = ({projects, deleteHandler}) => {
             key={idx}/>
         )
     })
-    console.log(singlePro)
-    console.log(projects)
+    
     return (
         <div className='project-list'>
             {projects.length > 0 ? singlePro: 
