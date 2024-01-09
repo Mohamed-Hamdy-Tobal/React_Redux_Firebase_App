@@ -4,11 +4,11 @@ import auth, { db } from '../../Firebase/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 // import { v4 as uuidv4 } from 'uuid';
 
-
+const storedUser = sessionStorage.getItem('user');
 const initialState = {
     loading: false, 
     error: null,
-    currentUser: {},
+    currentUser: storedUser ? JSON.parse(storedUser) : {},
     redirectPathAfterSignIn: null,
 }
 
@@ -116,6 +116,7 @@ export const authReducer = createSlice({
         .addCase(signUp.fulfilled, (state, action) => {
             state.loading = false
             state.currentUser = action.payload
+            sessionStorage.setItem('user', JSON.stringify(action.payload));
         })
         .addCase(signUp.rejected, (state, action) => {
             state.loading = false
@@ -130,6 +131,7 @@ export const authReducer = createSlice({
         .addCase(signIN.fulfilled, (state, action) => {
             state.loading = false
             state.currentUser = action.payload
+            sessionStorage.setItem('user', JSON.stringify(action.payload));
         })
         .addCase(signIN.rejected, (state, action) => {
             state.loading = false
@@ -144,6 +146,7 @@ export const authReducer = createSlice({
         .addCase(logOut.fulfilled, (state) => {
             state.loading = false
             state.currentUser = {}
+            sessionStorage.removeItem('user');
         })
         .addCase(logOut.rejected, (state, action) => {
             state.loading = false
