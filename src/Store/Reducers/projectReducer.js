@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, setDoc } from 'firebase/firestore';
 import { db } from '../../Firebase/firebase';
 import { v4 as uuidv4 } from 'uuid';
-import moment from 'moment';
+// import moment from 'moment';
 
 const initialState = {
     loading: false, 
@@ -38,7 +38,8 @@ export const addProject = createAsyncThunk(
         const {rejectWithValue, getState} = thunkAPI;
         try {
             const uniqueId = uuidv4();
-            const createdAt = moment(new Date()).calendar();
+            const currentDate = new Date();
+            const createdAt = `${currentDate.getMonth() + 1}/${currentDate.getDate()}/${currentDate.getFullYear()} at ${currentDate.getHours() % 12 || 12}:${(currentDate.getMinutes() < 10 ? '0' : '') + currentDate.getMinutes()} ${currentDate.getHours() < 12 ? 'AM' : 'PM'}`;
 
             await setDoc(doc(db, "projects", uniqueId), {
                 ...itemStore,
